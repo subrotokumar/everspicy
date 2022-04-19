@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './Category_meal_screen.dart';
-import './categories_screen.dart';
+import './pages/category_meal_screen.dart';
+import './pages/categories_screen.dart';
 
 void main() => runApp(MyApp());
 

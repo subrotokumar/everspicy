@@ -45,59 +45,58 @@ class MealDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: appbar,
-      body: Container(
-        // width: double.infinity,
-        // height: (mediaQuery.size.height -
-        //         appbar.preferredSize.height -
-        //         mediaQuery.padding.top) *
-        //     0.95,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                height: 300,
-                width: double.infinity,
-                child: Image.network(
-                  mealData.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          Navigator.of(context).pop(mealId);
+        },
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10),
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                mealData.imageUrl,
+                fit: BoxFit.cover,
               ),
-              buildSectionTitle('Ingredients'),
-              buildContainer(
-                ListView.builder(
-                  itemBuilder: ((context, index) {
-                    return Card(
-                      color: Theme.of(context).colorScheme.secondary,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        child: Text("${mealData.ingredients[index]}"),
+            ),
+            buildSectionTitle('Ingredients'),
+            buildContainer(
+              ListView.builder(
+                itemBuilder: ((context, index) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      child: Text("${mealData.ingredients[index]}"),
+                    ),
+                  );
+                }),
+                itemCount: mealData.ingredients.length,
+              ),
+            ),
+            buildSectionTitle('Steps'),
+            buildContainer(
+              ListView.builder(
+                itemBuilder: ((context, index) {
+                  return Column(children: <Widget>[
+                    if (index > 0) Divider(),
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text('# ${index + 1}'),
                       ),
-                    );
-                  }),
-                  itemCount: mealData.ingredients.length,
-                ),
+                      title: Text("${mealData.steps[index]}"),
+                    ),
+                  ]);
+                }),
+                itemCount: mealData.steps.length,
               ),
-              buildSectionTitle('Steps'),
-              buildContainer(
-                ListView.builder(
-                  itemBuilder: ((context, index) {
-                    return Column(children: <Widget>[
-                      if (index > 0) Divider(),
-                      ListTile(
-                        leading: CircleAvatar(
-                          child: Text('# ${index + 1}'),
-                        ),
-                        title: Text("${mealData.steps[index]}"),
-                      ),
-                    ]);
-                  }),
-                  itemCount: mealData.steps.length,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

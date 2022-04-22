@@ -5,10 +5,11 @@ import '../models/meal.dart';
 class MealDetailScreen extends StatelessWidget {
   static const route = '/meal-detail';
   //const MealDetailScreen({Key key}) : super(key: key);
-
+  final Function toggleFavorite;
+  final Function isMealFavorite;
+  MealDetailScreen(this.toggleFavorite, this.isMealFavorite);
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final mealId = ModalRoute.of(context).settings.arguments as String;
     final mealData = dummyMeal.firstWhere((element) => element.id == mealId);
     final PreferredSizeWidget appbar = AppBar(
@@ -46,9 +47,11 @@ class MealDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: appbar,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: isMealFavorite(mealId)
+            ? Icon(Icons.favorite)
+            : Icon(Icons.favorite_border),
         onPressed: () {
-          Navigator.of(context).pop(mealId);
+          toggleFavorite(mealId);
         },
       ),
       body: SingleChildScrollView(
